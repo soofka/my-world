@@ -4,8 +4,8 @@ public class Element {
     protected String bgColor = Colors.BLACK_BACKGROUND;
     protected char sign = '#';
 
-    public void display() {
-        System.out.print(this.fgColor + this.bgColor + this.sign + Colors.RESET);
-    }
+    public String getFgColor() { return this.fgColor; }
+    public String getBgColor() { return this.bgColor; }
+    public char getSign() { return this.sign; }
 
 }
