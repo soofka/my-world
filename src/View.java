@@ -25,15 +25,15 @@ public class View {
     }
 
     private void print(char character) {
-        print(Character.toString(character));
+        this.print(Character.toString(character));
     }
 
     private void print(char character, String fgColor, String bgColor) {
-        print(Character.toString(character), fgColor, bgColor);
+        this.print(Character.toString(character), fgColor, bgColor);
     }
 
     private void print(String text) {
-        print(text, Colors.WHITE, Colors.BLACK_BACKGROUND);
+        this.print(text, Colors.WHITE, Colors.BLACK_BACKGROUND);
     }
 
     private void print(String text, String fgColor, String bgColor) {
@@ -41,7 +41,7 @@ public class View {
     }
 
     private void nextLine() {
-        System.out.print("\r\n");
+        this.print("\r\n");
     }
 
 }
