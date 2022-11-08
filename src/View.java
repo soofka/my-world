@@ -22,6 +22,12 @@ public class View {
             }
             this.nextLine();
         }
+
+        this.print("Inventory: ");
+        for (int i = 0; i < world.getPlayer().getInventory().getItems().size(); i++) {
+            Item item = world.getPlayer().getInventory().getItems().get(i);
+            this.print()
+        }
     }
 
     private void print(char character) {

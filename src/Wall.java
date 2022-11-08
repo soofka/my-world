@@ -26,7 +26,6 @@ public class Wall extends Element {
         }
 
         this.fgColor = Colors.BLUE_BOLD_BRIGHT;
-        this.accessible = false;
     }
 
 }
