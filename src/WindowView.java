@@ -1,47 +1,58 @@
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 
 public class WindowView extends View {
 
-    JFrame frame;
-    JTextPane textPane;
+    private JFrame frame;
+    private JTextPane textPane;
 
-    public WindowView(Model model) {
+    WindowView(Model model) {
         super(model);
+        this.textPane = new JTextPane();
+        this.textPane.setEditable(false);
+        this.textPane.setPreferredSize(new Dimension(240, 300));
+        this.textPane.setBackground(Color.black);
+        this.textPane.setForeground(Color.white);
+        this.textPane.setFont(new Font("Courier New", Font.BOLD, 22));
 
         this.frame = new JFrame();
-        this.textPane = new JTextPane();
-
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.textPane.setPreferredSize(new Dimension(200, 200));
-        frame.getContentPane().add(this.textPane, BorderLayout.CENTER);
 
-        frame.getRootPane().registerKeyboardAction(new ActionListener() {
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                System.out.println("F1 pressed");
-            }
-        }, KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0), JComponent.WHEN_IN_FOCUSED_WINDOW);
-
-        frame.pack();
-        frame.setVisible(true);
+        this.frame.getContentPane().add(this.textPane, BorderLayout.CENTER);
+        this.frame.pack();
+        this.frame.setVisible(true);
     }
 
-    public void display() {
-        World world = this.model.getWorld();
+    public void reset() {
+        this.textPane.setText("");
+    }
 
-        String worldText = "";
-        for (int i = 0; i < world.getSizeY(); i++) {
-            for (int j = 0; j < world.getSizeX(); j++) {
-                worldText += world.getElement(j, i).getSign();
-            }
-            worldText += "\r\n";
+    public void print(String text) {
+        this.printInWindow(text, null);
+    }
+
+    public void print(Element element) {
+        Style style = this.textPane.addStyle("", null);
+        StyleConstants.setForeground(style, element.getFgColor().getWindow());
+        StyleConstants.setBackground(style, element.getBgColor().getWindow());
+        this.printInWindow(Character.valueOf(element.getSign()).toString(), style);
+    }
+
+    private void printInWindow(String text, Style style) {
+        StyledDocument styledDocument = this.textPane.getStyledDocument();
+        try {
+            styledDocument.insertString(styledDocument.getLength(), text, style);
+        } catch(BadLocationException e) {
+            System.out.println(e.getMessage());
         }
+    }
 
-        this.textPane.setText(worldText);
+    public JFrame getFrame() {
+        return this.frame;
     }
 
 }

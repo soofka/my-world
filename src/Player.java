@@ -6,7 +6,7 @@ public class Player extends Element {
 
     Player() {
         this.sign = '■';
-        this.fgColor = Colors.RED_BRIGHT;
+        this.fgColor = GameColor.RED;
         this.inventory = new Inventory();
     }
 

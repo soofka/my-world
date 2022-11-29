@@ -1,46 +1,26 @@
 public class ConsoleView extends View {
 
-    private final String coords = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String ANSI_RESET = "\033[0m";
 
     ConsoleView(Model model) {
         super(model);
     }
 
-    public void display() {
-        World world = this.model.getWorld();
-        Element[][] elements = world.getElements();
-
-        this.print("# " + this.coords.substring(0, world.getSizeX()), Colors.WHITE, Colors.BLACK_BACKGROUND);
-        this.nextLine();
-
-        for (int i = 0; i < world.getSizeY(); i++) {
-            this.print(this.coords.charAt(i) + " ");
-            for (int j = 0; j < world.getSizeX(); j++) {
-                Element element = elements[i][j];
-                this.print(element.getSign(), element.getFgColor(), element.getBgColor());
-            }
-            this.nextLine();
+    public void reset() {
+        for (int i = 0; i < 50; i++) {
+            printInConsole("\r\n");
         }
     }
 
-    private void print(char character) {
-        this.print(Character.toString(character));
+    public void print(String text) {
+        printInConsole(text);
     }
 
-    private void print(char character, String fgColor, String bgColor) {
-        this.print(Character.toString(character), fgColor, bgColor);
+    public void print(Element element) {
+        printInConsole(element.getFgColor().getFgConsole() + element.getBgColor().getBgConsole() + element.getSign() + ANSI_RESET);
     }
 
-    private void print(String text) {
-        this.print(text, Colors.WHITE, Colors.BLACK_BACKGROUND);
+    private static void printInConsole(String text) {
+        System.out.print(text);
     }
-
-    private void print(String text, String fgColor, String bgColor) {
-        System.out.print(fgColor + bgColor + text + Colors.RESET);
-    }
-
-    private void nextLine() {
-        this.print("\r\n");
-    }
-
 }

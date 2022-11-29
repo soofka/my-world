@@ -1,9 +1,8 @@
-public class Key extends Element {
+public class Key extends Item {
 
-    Key(String color) {
+    Key(GameColor color) {
+        super();
         this.sign = 'K';
-        this.accessible = true;
-        this.collectible = true;
         this.fgColor = color;
     }
 

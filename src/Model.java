@@ -1,24 +1,31 @@
 public class Model {
 
-    private Controller controller;
     private World world;
 
-    Model(Controller controller) {
-        this.controller = controller;
+    Model() {
         this.world = new World();
     }
 
-    public void applyInput() {
-        try {
-            String input = this.controller.getInput();
-            String[] inputValues = input.split(",");
+    public void applyInput(String input) {
+        switch(input) {
+            case "w":
+                this.world.movePlayer(this.world.getPlayer().getX(), this.world.getPlayer().getY() - 1);
+                break;
 
-            int x = Integer.parseInt(inputValues[0]);
-            int y = Integer.parseInt(inputValues[1]);
+            case "s":
+                this.world.movePlayer(this.world.getPlayer().getX(), this.world.getPlayer().getY() + 1);
+                break;
 
-            this.world.movePlayer(x, y);
-        } catch(NumberFormatException e) {
+            case "a":
+                this.world.movePlayer(this.world.getPlayer().getX() - 1, this.world.getPlayer().getY());
+                break;
 
+            case "d":
+                this.world.movePlayer(this.world.getPlayer().getX() + 1, this.world.getPlayer().getY());
+                break;
+
+            default:
+                break;
         }
     }
 
